@@ -1,14 +1,14 @@
-import { getComponent, getSlot } from '../_util/props-util';
+import { getComponent, getSlot , hasProp, getEvents } from '../_util/props-util';
 import PropTypes from '../_util/vue-types';
 import Trigger from '../vc-trigger';
 import Menus from './Menus';
 import KeyCode from '../_util/KeyCode';
 import arrayTreeFilter from 'array-tree-filter';
 import shallowEqualArrays from 'shallow-equal/arrays';
-import { hasProp, getEvents } from '../_util/props-util';
 import BaseMixin from '../_util/BaseMixin';
 import { cloneElement } from '../_util/vnode';
 import { defineComponent } from 'vue';
+import isEqual from 'lodash-es/isEqual';
 
 const BUILT_IN_PLACEMENTS = {
   bottomLeft: {
@@ -134,7 +134,7 @@ export default defineComponent({
       const { options = [], sActiveValue = [] } = this;
       const result = arrayTreeFilter(
         options,
-        (o, level) => o[this.getFieldName('value')] === sActiveValue[level],
+        (o, level) => isEqual(o[this.getFieldName('value')], sActiveValue[level]),
         { childrenKeyName: this.getFieldName('children') },
       );
       if (result[result.length - 2]) {
@@ -145,7 +145,7 @@ export default defineComponent({
     getActiveOptions(activeValue) {
       return arrayTreeFilter(
         this.options || [],
-        (o, level) => o[this.getFieldName('value')] === activeValue[level],
+        (o, level) => isEqual(o[this.getFieldName('value')], activeValue[level]),
         { childrenKeyName: this.getFieldName('children') },
       );
     },
@@ -244,7 +244,7 @@ export default defineComponent({
       const currentOptions = this.getCurrentLevelOptions();
       const currentIndex = currentOptions
         .map(o => o[this.getFieldName('value')])
-        .indexOf(activeValue[currentLevel]);
+        .findIndex(val => isEqual(activeValue[currentLevel], val));
       if (
         e.keyCode !== KeyCode.DOWN &&
         e.keyCode !== KeyCode.UP &&

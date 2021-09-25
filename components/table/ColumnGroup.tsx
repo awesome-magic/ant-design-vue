@@ -1,11 +1,9 @@
 import { defineComponent } from 'vue';
-import PropTypes from '../_util/vue-types';
+import type { ColumnGroupProps } from '../vc-table/sugar/ColumnGroup';
 
-export default defineComponent({
+export default defineComponent<ColumnGroupProps<any>>({
   name: 'ATableColumnGroup',
-  props: {
-    title: PropTypes.any,
-  },
+  slots: ['title'],
   __ANT_TABLE_COLUMN_GROUP: true,
   render() {
     return null;

@@ -3,9 +3,10 @@ import PropTypes from '../_util/vue-types';
 import { getSlot } from '../_util/props-util';
 import classNames from '../_util/classNames';
 import createRef from '../_util/createRef';
-import { CSSProperties, defineComponent, VNodeChild } from 'vue';
-import { RenderDOMFunc } from './interface';
-import { DropdownRender } from './interface/generator';
+import type { CSSProperties, VNodeChild } from 'vue';
+import { defineComponent } from 'vue';
+import type { RenderDOMFunc } from './interface';
+import type { DropdownRender } from './interface/generator';
 
 const getBuiltInPlacements = (dropdownMatchSelectWidth: number | boolean) => {
   // Enable horizontal overflow auto-adjustment when a custom dropdown width is provided
@@ -64,6 +65,7 @@ export interface SelectTriggerProps {
   empty: boolean;
   getTriggerDOMNode: () => any;
 }
+
 const SelectTrigger = defineComponent<SelectTriggerProps, { popupRef: any }>({
   name: 'SelectTrigger',
   inheritAttrs: false,
@@ -93,6 +95,7 @@ const SelectTrigger = defineComponent<SelectTriggerProps, { popupRef: any }>({
       transitionName,
       direction,
       getPopupContainer,
+      getTriggerDOMNode,
     } = props as SelectTriggerProps;
     const dropdownPrefixCls = `${prefixCls}-dropdown`;
 
@@ -129,13 +132,14 @@ const SelectTrigger = defineComponent<SelectTriggerProps, { popupRef: any }>({
           [`${dropdownPrefixCls}-empty`]: empty,
         })}
         popupStyle={popupStyle}
-        // getTriggerDOMNode={getTriggerDOMNode}
+        getTriggerDOMNode={getTriggerDOMNode}
       >
         {getSlot(this)[0]}
       </Trigger>
     );
   },
 });
+
 SelectTrigger.props = {
   dropdownAlign: PropTypes.object,
   visible: PropTypes.looseBool,
@@ -155,4 +159,5 @@ SelectTrigger.props = {
   direction: PropTypes.string,
   getTriggerDOMNode: PropTypes.func,
 };
+
 export default SelectTrigger;

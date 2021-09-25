@@ -1,4 +1,4 @@
-import { asyncExpect } from '@/tests/utils';
+import { asyncExpect } from '../../../tests/utils';
 import { mount } from '@vue/test-utils';
 import KeyCode from '../../_util/KeyCode';
 import Cascader from '..';
@@ -110,9 +110,7 @@ describe('Cascader', () => {
     });
 
     await asyncExpect(() => {
-      $$('.ant-cascader-menu')[0]
-        .querySelectorAll('.ant-cascader-menu-item')[0]
-        .click();
+      $$('.ant-cascader-menu')[0].querySelectorAll('.ant-cascader-menu-item')[0].click();
     });
 
     await asyncExpect(() => {
@@ -120,9 +118,7 @@ describe('Cascader', () => {
     });
 
     await asyncExpect(() => {
-      $$('.ant-cascader-menu')[1]
-        .querySelectorAll('.ant-cascader-menu-item')[0]
-        .click();
+      $$('.ant-cascader-menu')[1].querySelectorAll('.ant-cascader-menu-item')[0].click();
     });
 
     await asyncExpect(() => {
@@ -130,9 +126,7 @@ describe('Cascader', () => {
     });
 
     await asyncExpect(() => {
-      $$('.ant-cascader-menu')[2]
-        .querySelectorAll('.ant-cascader-menu-item')[0]
-        .click();
+      $$('.ant-cascader-menu')[2].querySelectorAll('.ant-cascader-menu-item')[0].click();
     });
 
     await asyncExpect(() => {

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import Modal from '..';
 import mountTest from '../../../tests/shared/mountTest';
-import { asyncExpect } from '@/tests/utils';
+import { asyncExpect } from '../../../tests/utils';
 
 const ModalTester = {
   props: ['footer', 'visible'],
@@ -63,6 +63,19 @@ describe('Modal', () => {
     );
     await asyncExpect(() => {
       expect(wrapper.html()).toMatchSnapshot();
+    });
+  });
+
+  it('should work with getContainer=false', async () => {
+    const wrapper1 = mount(Modal, {
+      sync: false,
+      props: {
+        getContainer: false,
+        visible: true,
+      },
+    });
+    await asyncExpect(() => {
+      expect(wrapper1.html()).toMatchSnapshot();
     });
   });
 });

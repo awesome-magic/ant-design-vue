@@ -1,16 +1,17 @@
-import { computed, Ref, VNodeChild } from 'vue';
-import { RawValueType, FlattenOptionsType, Key } from '../interface/generator';
+import type { Ref } from 'vue';
+import { computed } from 'vue';
+import type { RawValueType, FlattenOptionsType, Key } from '../interface/generator';
 
 export default function useCacheOptions<
-  OptionsType extends {
+  OptionType extends {
     value?: RawValueType;
-    label?: VNodeChild;
+    label?: any;
     key?: Key;
     disabled?: boolean;
-  }[]
->(_values: RawValueType[], options: Ref) {
+  },
+>(options: Ref) {
   const optionMap = computed(() => {
-    const map: Map<RawValueType, FlattenOptionsType<OptionsType>[number]> = new Map();
+    const map: Map<RawValueType, FlattenOptionsType<OptionType>[number]> = new Map();
     options.value.forEach((item: any) => {
       const {
         data: { value },
@@ -20,7 +21,7 @@ export default function useCacheOptions<
     return map;
   });
 
-  const getValueOption = (vals: RawValueType[]): FlattenOptionsType<OptionsType> =>
+  const getValueOption = (vals: RawValueType[]) =>
     vals.map(value => optionMap.value.get(value)).filter(Boolean);
 
   return getValueOption;
