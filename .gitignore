@@ -62,6 +62,7 @@ es
 _site
 yarn.lock
 package-lock.json
+pnpm-lock.yaml
 /coverage
 
 # 备份文件
@@ -69,3 +70,13 @@ package-lock.json
 list.txt
 
 site/dev.js
+
+# IDE 语法提示临时文件
+vetur/
+
+report.html
+
+site/src/router/demoRoutes.js
+
+components/version/version.tsx
+~component-api.json

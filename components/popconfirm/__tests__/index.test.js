@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { asyncExpect } from '@/tests/utils';
+import { asyncExpect } from '../../../tests/utils';
 import Popconfirm from '..';
 function $$(className) {
   return document.body.querySelectorAll(className);
@@ -12,7 +12,7 @@ describe('Popconfirm', () => {
   it('should popup Popconfirm dialog', async () => {
     const onVisibleChange = jest.fn();
 
-    const wrapper = mount(
+    mount(
       {
         render() {
           return (
@@ -33,13 +33,13 @@ describe('Popconfirm', () => {
     );
     let triggerNode = null;
     await asyncExpect(() => {
-      triggerNode = wrapper.findAll('span')[0];
-      triggerNode.trigger('click');
+      triggerNode = document.getElementsByTagName('span')[0];
+      triggerNode.dispatchEvent(new MouseEvent('click'));
     });
     await asyncExpect(() => {
       expect(onVisibleChange).toHaveBeenLastCalledWith(true, undefined);
       expect($$('.popconfirm-test').length).toBe(1);
-      triggerNode.trigger('click');
+      triggerNode.dispatchEvent(new MouseEvent('click'));
     }, 1000);
     await asyncExpect(() => {
       expect(onVisibleChange).toHaveBeenLastCalledWith(false, undefined);
@@ -68,7 +68,6 @@ describe('Popconfirm', () => {
     await asyncExpect(() => {
       const popup = popconfirm.vm.$refs.popconfirm.getPopupDomNode();
       expect(popup).not.toBe(null);
-      expect(popup.className).toContain('ant-popover-placement-top');
       expect(popup.innerHTML).toMatchSnapshot();
     }, 1000);
   });
@@ -78,7 +77,7 @@ describe('Popconfirm', () => {
       {
         render() {
           return (
-            <Popconfirm ref="popconfirm" title="code" disabled>
+            <Popconfirm ref="popconfirm" title="code" disabled={true}>
               <span>click me</span>
             </Popconfirm>
           );
@@ -86,13 +85,8 @@ describe('Popconfirm', () => {
       },
       { sync: false },
     );
-
-    await asyncExpect(() => {
-      popconfirm.find('span').trigger('click');
-    }, 1000);
-    await asyncExpect(() => {
-      const popup = popconfirm.vm.$refs.popconfirm.getPopupDomNode();
-      expect(popup).toBeFalsy();
-    }, 1000);
+    popconfirm.find('span').trigger('click');
+    const popup = popconfirm.vm.$refs.popconfirm.getPopupDomNode();
+    expect(popup).toBeFalsy();
   });
 });

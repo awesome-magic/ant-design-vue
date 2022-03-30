@@ -37,6 +37,7 @@
     overflow: inherit;
     overflow-x: hidden;
     overflow-y: auto;
+    /* stylelint-disable declaration-block-no-redundant-longhand-properties */
     font-weight: inherit;
     font-size: inherit;
     font-family: inherit;
@@ -45,6 +46,7 @@
     font-size-adjust: inherit;
     font-stretch: inherit;
     line-height: inherit;
+    /* stylelint-enable declaration-block-no-redundant-longhand-properties */
     direction: inherit;
     letter-spacing: inherit;
     white-space: inherit;
@@ -60,11 +62,10 @@
     border: none;
     outline: none;
     resize: none;
-    .placeholder();
-
-    &:read-only {
-      cursor: default;
+    & when (@theme = dark) {
+      background-color: transparent;
     }
+    .placeholder();
   }
 
   &-measure {
@@ -95,7 +96,7 @@
     box-sizing: border-box;
     font-size: @font-size-base;
     font-variant: initial;
-    background-color: @component-background;
+    background-color: @mentions-dropdown-bg;
     border-radius: @border-radius-base;
     outline: none;
     box-shadow: @box-shadow-base;
@@ -120,7 +121,7 @@
         overflow: hidden;
         color: @text-color;
         font-weight: normal;
-        line-height: 22px;
+        line-height: @line-height-base;
         white-space: nowrap;
         text-overflow: ellipsis;
         cursor: pointer;
@@ -144,7 +145,7 @@
 
           &:hover {
             color: @disabled-color;
-            background-color: @component-background;
+            background-color: @mentions-dropdown-menu-item-hover-bg;
             cursor: not-allowed;
           }
         }
@@ -156,9 +157,11 @@
         }
 
         &-active {
-          background-color: @item-active-bg;
+          background-color: @item-hover-bg;
         }
       }
     }
   }
 }
+
+@import './rtl';
